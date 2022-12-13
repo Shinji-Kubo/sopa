@@ -12,8 +12,10 @@ import (
 )
 
 func RootPath(ctx *gin.Context) {
+	path := os.Getenv("HOME")
+
 	line := ""
-	f, _ := os.Open("data/data.csv")
+	f, _ := os.Open(fmt.Sprintf("%s/record/data.csv", path))
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
