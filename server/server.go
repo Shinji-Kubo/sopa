@@ -2,6 +2,8 @@ package server
 
 import (
 	"bufio"
+	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -21,7 +23,10 @@ func RootPath(ctx *gin.Context) {
 
 	values := strings.Split(line, ",")
 
-	time, _ := time.Parse(time.RFC3339, values[0])
+	time, err := time.Parse(time.RFC3339, fmt.Sprintf("%sZ", values[0]))
+	if err != nil {
+		log.Println(err)
+	}
 
 	ctx.Set("time", time.String())
 	ctx.Set("value", values[1])
